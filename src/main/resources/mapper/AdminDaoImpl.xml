@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yujr.cms.dao.AdminDao">
+  <resultMap id="BaseResultMap" type="com.yujr.cms.entity.Admin">
+    <id column="a_name" jdbcType="VARCHAR" property="aName" />
+    <result column="a_passwd" jdbcType="CHAR" property="aPasswd" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    a_name, a_passwd
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from admin
+    where a_name = #{aName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from admin
+    where a_name = #{aName,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="a_name" keyProperty="aName" parameterType="com.yujr.cms.entity.Admin" useGeneratedKeys="true">
+    insert into admin (a_passwd)
+    values (#{aPasswd,jdbcType=CHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.yujr.cms.entity.Admin">
+    update admin
+    set a_passwd = #{aPasswd,jdbcType=CHAR}
+    where a_name = #{aName,jdbcType=VARCHAR}
+  </update>
+</mapper>

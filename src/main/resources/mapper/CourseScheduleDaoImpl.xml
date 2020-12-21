@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yujr.cms.dao.CourseScheduleDao">
+  <resultMap id="BaseResultMap" type="com.yujr.cms.entity.CourseSchedule">
+    <id column="c_id" jdbcType="INTEGER" property="cId" />
+    <id column="t_id" jdbcType="INTEGER" property="tId" />
+    <result column="cs_time" jdbcType="VARCHAR" property="csTime" />
+    <result column="cs_location" jdbcType="VARCHAR" property="csLocation" />
+    <result column="cs_credits" jdbcType="INTEGER" property="csCredits" />
+    <result column="cs_period" jdbcType="INTEGER" property="csPeriod" />
+    <result column="cs_num" jdbcType="INTEGER" property="csNum" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    c_id, t_id, cs_time, cs_location, cs_credits, cs_period, cs_num
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.yujr.cms.entity.CourseScheduleKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from course_schedule
+    where c_id = #{cId,jdbcType=INTEGER}
+      and t_id = #{tId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.yujr.cms.entity.CourseScheduleKey">
+    delete from course_schedule
+    where c_id = #{cId,jdbcType=INTEGER}
+      and t_id = #{tId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="c_id" keyProperty="cId" parameterType="com.yujr.cms.entity.CourseSchedule" useGeneratedKeys="true">
+    insert into course_schedule (t_id, cs_time, cs_location, 
+      cs_credits, cs_period, cs_num
+      )
+    values (#{tId,jdbcType=INTEGER}, #{csTime,jdbcType=VARCHAR}, #{csLocation,jdbcType=VARCHAR}, 
+      #{csCredits,jdbcType=INTEGER}, #{csPeriod,jdbcType=INTEGER}, #{csNum,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.yujr.cms.entity.CourseSchedule">
+    update course_schedule
+    set cs_time = #{csTime,jdbcType=VARCHAR},
+      cs_location = #{csLocation,jdbcType=VARCHAR},
+      cs_credits = #{csCredits,jdbcType=INTEGER},
+      cs_period = #{csPeriod,jdbcType=INTEGER},
+      cs_num = #{csNum,jdbcType=INTEGER}
+    where c_id = #{cId,jdbcType=INTEGER}
+      and t_id = #{tId,jdbcType=INTEGER}
+  </update>
+</mapper>

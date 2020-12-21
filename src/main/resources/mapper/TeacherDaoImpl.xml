@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yujr.cms.dao.TeacherDao">
+  <resultMap id="BaseResultMap" type="com.yujr.cms.entity.Teacher">
+    <id column="t_id" jdbcType="INTEGER" property="tId" />
+    <result column="t_name" jdbcType="VARCHAR" property="tName" />
+    <result column="t_passwd" jdbcType="CHAR" property="tPasswd" />
+    <result column="t_sex" jdbcType="CHAR" property="tSex" />
+    <result column="t_introduction" jdbcType="VARCHAR" property="tIntroduction" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    t_id, t_name, t_passwd, t_sex, t_introduction
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from teacher
+    where t_id = #{tId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from teacher
+    where t_id = #{tId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="t_id" keyProperty="tId" parameterType="com.yujr.cms.entity.Teacher" useGeneratedKeys="true">
+    insert into teacher (t_name, t_passwd, t_sex, 
+      t_introduction)
+    values (#{tName,jdbcType=VARCHAR}, #{tPasswd,jdbcType=CHAR}, #{tSex,jdbcType=CHAR}, 
+      #{tIntroduction,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.yujr.cms.entity.Teacher">
+    update teacher
+    set t_name = #{tName,jdbcType=VARCHAR},
+      t_passwd = #{tPasswd,jdbcType=CHAR},
+      t_sex = #{tSex,jdbcType=CHAR},
+      t_introduction = #{tIntroduction,jdbcType=VARCHAR}
+    where t_id = #{tId,jdbcType=INTEGER}
+  </update>
+</mapper>
