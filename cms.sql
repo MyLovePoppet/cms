@@ -111,6 +111,8 @@ create table `course_schedule`
     `cs_num`      int(10)     default 0 comment '选课人数',
     -- c_id + t_id为主键
     primary key (`cs_id`),
+    -- 课程号和教师号合起来是唯一的
+    unique (`c_id`, `t_id`),
     -- 两个外键约束
     foreign key (`c_id`) references `course` (`c_id`),
     foreign key (`t_id`) references `teacher` (`t_id`)
