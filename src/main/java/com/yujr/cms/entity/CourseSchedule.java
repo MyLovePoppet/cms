@@ -1,16 +1,35 @@
 package com.yujr.cms.entity;
 
-import java.io.Serializable;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * course_schedule
+ *
  * @author yujr
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class CourseSchedule extends CourseScheduleKey implements Serializable {
+@NoArgsConstructor
+@AllArgsConstructor
+public class CourseSchedule implements Serializable {
+    /**
+     * 开课记录号
+     */
+    private Integer csId;
+
+    /**
+     * 课程id,外键
+     */
+    private Integer cId;
+
+    /**
+     * 教师id,外键
+     */
+    private Integer tId;
+
     /**
      * 上课时间
      */

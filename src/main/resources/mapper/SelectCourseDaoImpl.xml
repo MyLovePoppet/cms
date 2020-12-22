@@ -4,10 +4,10 @@
   <resultMap id="BaseResultMap" type="com.yujr.cms.entity.SelectCourse">
     <id column="sc_id" jdbcType="INTEGER" property="scId" />
     <result column="s_id" jdbcType="INTEGER" property="sId" />
-    <result column="c_id" jdbcType="INTEGER" property="cId" />
+    <result column="cs_id" jdbcType="INTEGER" property="csId" />
   </resultMap>
   <sql id="Base_Column_List">
-    sc_id, s_id, c_id
+    sc_id, s_id, cs_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -20,13 +20,13 @@
     where sc_id = #{scId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="sc_id" keyProperty="scId" parameterType="com.yujr.cms.entity.SelectCourse" useGeneratedKeys="true">
-    insert into select_course (s_id, c_id)
-    values (#{sId,jdbcType=INTEGER}, #{cId,jdbcType=INTEGER})
+    insert into select_course (s_id, cs_id)
+    values (#{sId,jdbcType=INTEGER}, #{csId,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.yujr.cms.entity.SelectCourse">
     update select_course
     set s_id = #{sId,jdbcType=INTEGER},
-      c_id = #{cId,jdbcType=INTEGER}
+      cs_id = #{csId,jdbcType=INTEGER}
     where sc_id = #{scId,jdbcType=INTEGER}
   </update>
 </mapper>

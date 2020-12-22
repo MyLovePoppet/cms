@@ -1,6 +1,8 @@
 package com.yujr.cms.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -10,6 +12,8 @@ import java.io.Serializable;
  * @author yujr
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Admin implements Serializable {
     /**
      * 账号

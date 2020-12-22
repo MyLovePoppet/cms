@@ -11,6 +11,5 @@ public interface AdminDao {
 
     Admin selectByPrimaryKey(String aName);
 
-
     int updateByPrimaryKey(Admin record);
 }

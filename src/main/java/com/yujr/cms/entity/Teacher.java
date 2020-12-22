@@ -1,13 +1,19 @@
 package com.yujr.cms.entity;
 
-import java.io.Serializable;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * teacher
+ *
  * @author yujr
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Teacher implements Serializable {
     /**
      * id
