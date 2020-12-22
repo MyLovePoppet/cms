@@ -1,11 +1,7 @@
 package com.yujr.cms;
 
-import com.yujr.cms.commons.CodecUtils;
-import com.yujr.cms.dao.AdminDao;
-import com.yujr.cms.dao.CourseDao;
-import com.yujr.cms.dao.StudentDao;
-import com.yujr.cms.dao.TeacherDao;
-import com.yujr.cms.entity.Course;
+import com.yujr.cms.entity.*;
+import com.yujr.cms.service.AdminService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,33 +9,32 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class CmsApplicationTests {
     @Autowired
-    AdminDao adminDao;
-    @Autowired
-    CourseDao courseDao;
-    @Autowired
-    StudentDao studentDao;
-    @Autowired
-    TeacherDao teacherDao;
-
+    AdminService adminService;
 
     @Test
     void contextLoads() {
-        System.out.println(adminDao.selectByPrimaryKey("admin"));
-        Course course = new Course(null, "高等代数", "高等代数是一门数学课", "数学", "数学");
-        courseDao.insert(course);
-        System.out.println(course);
+        Teacher teacher = new Teacher(null, "111", "123", "男", "无");
+        adminService.addTeacher(teacher);
+        System.out.println(teacher);
+
+        Student student = new Student(null, "111", "男", "123123", null, null, null);
+        adminService.addStudent(student);
+        System.out.println(student);
+
+        Course course = new Course(null, "222", null, null, null);
+        adminService.addCourse(course);
+
+        CourseSchedule courseSchedule = new CourseSchedule(null, course.getCId(), teacher.getTId(), null, null, 1, 1, 0);
+        adminService.addCourseSchedule(courseSchedule);
+        System.out.println(courseSchedule);
+
+        SelectCourse selectCourse = new SelectCourse(null, student.getSId(), courseSchedule.getCsId());
+        adminService.addSelectCourse(selectCourse);
+        System.out.println(selectCourse);
+
+        System.out.println(adminService.deleteCourse(course.getCId()));
+        System.out.println(adminService.deleteTeacher(teacher.getTId()));
+        System.out.println(adminService.deleteStudent(student.getSId()));
     }
 
-    @Test
-    void testOnDelete() {
-        //System.out.println(courseDao.deleteByPrimaryKey(1));
-        //System.out.println(teacherDao.deleteByPrimaryKey(1));
-        System.out.println(studentDao.deleteByPrimaryKey(2));
-    }
-
-    @Test
-    void testCodec() {
-        assert "21232f297a57a5a743894a0e4a801fc3".equals(CodecUtils.md5("admin"));
-        //System.out.println(CodecUtils.md5("12346"));
-    }
 }
