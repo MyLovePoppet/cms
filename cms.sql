@@ -140,6 +140,8 @@ create table `select_course`
     `s_id`  int(10) not null comment '学生id,外键',
     `cs_id` int(10) not null comment '开课记录号',
     primary key (`sc_id`),
+    -- 一个学生一门课只能选一次
+    unique (`s_id`, `cs_id`),
     -- 两个外键约束
     foreign key (`s_id`) references `student` (`s_id`),
     foreign key (`cs_id`) references `course_schedule` (`cs_id`)
