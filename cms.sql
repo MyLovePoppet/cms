@@ -111,7 +111,6 @@ create table `course_schedule`
     `cs_num`      int(10)     default 0 comment '选课人数',
     -- c_id + t_id为主键
     primary key (`cs_id`),
-    -- 课程号和教师号合起来是唯一的
     unique (`c_id`, `t_id`),
     -- 两个外键约束
     foreign key (`c_id`) references `course` (`c_id`),
@@ -147,14 +146,35 @@ create table `select_course`
 ) engine = innodb
   default charset = utf8;
 
--- 学生选课后，开课记录内的选课人数+1
+-- 课程成绩表，得分为-1表示未给分
+create table `course_score`
+(
+    `sc_id`            int(10) not null comment '选课id',
+    `normal_score`     int(10) not null default -1 comment '平时得分',
+    `final_exam_score` int(10) not null default -1 comment '期末得分',
+    `overall_score`    int(10) not null default -1 comment '总评成绩',
+    primary key (`sc_id`),
+    foreign key (`sc_id`) references `select_course` (`sc_id`)
+) engine = innodb
+  default charset = utf8;
+
+-- 创建存储过程，使得学生选课后生成成绩表，并更新选课记录表
+create procedure update_on_select_course_insert(in scID int)
+begin
+    -- 更新成绩表
+    insert into `course_score` (`sc_id`, `normal_score`, `final_exam_score`, `overall_score`)
+    VALUES (scID, -1, -1, -1);
+    -- 更新选课记录表
+    update `course_schedule`
+    set `cs_num`=`cs_num` + 1
+    where `cs_id` = scID;
+end;
+-- 创建触发器
 create trigger on_select_course_insert
     after insert
     on `select_course`
     for each row
-    update `course_schedule`
-    set `cs_num`=`cs_num` + 1
-    where `cs_id` = NEW.`cs_id`;
+    call update_on_select_course_insert(NEW.sc_id);
 
 insert into `select_course` (`s_id`, `cs_id`)
 VALUES (1, 1),
@@ -170,20 +190,8 @@ create trigger on_select_course_delete
     for each row
     delete
     from `course_score`
-    where `course_score`.`cs_id` = OLD.`sc_id`;
+    where `course_score`.`sc_id` = OLD.`sc_id`;
 
-
-create table `course_score`
-(
-    `cs_id` int(10) not null comment '选课id',
-    `score` int(10) not null comment '得分',
-    primary key (`cs_id`),
-    foreign key (`cs_id`) references `select_course` (`sc_id`)
-) engine = innodb
-  default charset = utf8;
-insert into `course_score`(`cs_id`, `score`)
-VALUES (1, 80),
-       (2, 90),
-       (3, 95),
-       (4, 50);
-
+delete
+from select_course
+where sc_id = 1;
