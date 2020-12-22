@@ -2,31 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yujr.cms.dao.CourseScoreDao">
     <resultMap id="BaseResultMap" type="com.yujr.cms.entity.CourseScore">
-        <id column="cs_id" jdbcType="INTEGER" property="csId"/>
-        <result column="score" jdbcType="INTEGER" property="score"/>
+        <id column="sc_id" jdbcType="INTEGER" property="scId"/>
+        <result column="normal_score" jdbcType="INTEGER" property="normalScore"/>
+        <result column="final_exam_score" jdbcType="INTEGER" property="finalExamScore"/>
+        <result column="overall_score" jdbcType="INTEGER" property="overallScore"/>
     </resultMap>
     <sql id="Base_Column_List">
-        cs_id, score
+        sc_id, normal_score, final_exam_score, overall_score
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from course_score
-        where cs_id = #{csId,jdbcType=INTEGER}
+        where sc_id = #{scId,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from course_score
-        where cs_id = #{csId,jdbcType=INTEGER}
+        where sc_id = #{scId,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" keyColumn="cs_id" keyProperty="csId" parameterType="com.yujr.cms.entity.CourseScore"
+    <insert id="insert" keyColumn="sc_id" keyProperty="scId" parameterType="com.yujr.cms.entity.CourseScore"
             useGeneratedKeys="true">
-        insert into course_score (score)
-        values (#{score,jdbcType=INTEGER})
+        insert into course_score (normal_score, final_exam_score, overall_score)
+        values (#{normalScore,jdbcType=INTEGER}, #{finalExamScore,jdbcType=INTEGER}, #{overallScore,jdbcType=INTEGER})
     </insert>
     <update id="updateByPrimaryKey" parameterType="com.yujr.cms.entity.CourseScore">
         update course_score
-        set score = #{score,jdbcType=INTEGER}
-        where cs_id = #{csId,jdbcType=INTEGER}
+        set normal_score     = #{normalScore,jdbcType=INTEGER},
+            final_exam_score = #{finalExamScore,jdbcType=INTEGER},
+            overall_score    = #{overallScore,jdbcType=INTEGER}
+        where sc_id = #{scId,jdbcType=INTEGER}
     </update>
 </mapper>

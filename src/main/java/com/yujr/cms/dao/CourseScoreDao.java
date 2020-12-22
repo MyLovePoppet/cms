@@ -5,11 +5,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CourseScoreDao {
-    int deleteByPrimaryKey(Integer csId);
+    int deleteByPrimaryKey(Integer scId);
 
     int insert(CourseScore record);
 
-    CourseScore selectByPrimaryKey(Integer csId);
+    CourseScore selectByPrimaryKey(Integer scId);
 
     int updateByPrimaryKey(CourseScore record);
 }

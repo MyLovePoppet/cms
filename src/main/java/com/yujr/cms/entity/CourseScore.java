@@ -12,18 +12,28 @@ import java.io.Serializable;
  * @author yujr
  */
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class CourseScore implements Serializable {
     /**
      * 选课id
      */
-    private Integer csId;
+    private Integer scId;
 
     /**
-     * 得分
+     * 平时得分
      */
-    private Integer score;
+    private Integer normalScore;
+
+    /**
+     * 期末得分
+     */
+    private Integer finalExamScore;
+
+    /**
+     * 总评成绩
+     */
+    private Integer overallScore;
 
     private static final long serialVersionUID = 1L;
 }
