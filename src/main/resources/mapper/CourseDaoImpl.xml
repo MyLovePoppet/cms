@@ -1,38 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yujr.cms.dao.CourseDao">
-  <resultMap id="BaseResultMap" type="com.yujr.cms.entity.Course">
-    <id column="c_id" jdbcType="INTEGER" property="cId" />
-    <result column="c_name" jdbcType="VARCHAR" property="cName" />
-    <result column="c_introduction" jdbcType="VARCHAR" property="cIntroduction" />
-    <result column="c_major" jdbcType="VARCHAR" property="cMajor" />
-    <result column="c_college" jdbcType="VARCHAR" property="cCollege" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    c_id, c_name, c_introduction, c_major, c_college
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from course
-    where c_id = #{cId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from course
-    where c_id = #{cId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" keyColumn="c_id" keyProperty="cId" parameterType="com.yujr.cms.entity.Course" useGeneratedKeys="true">
-    insert into course (c_name, c_introduction, c_major, 
-      c_college)
-    values (#{cName,jdbcType=VARCHAR}, #{cIntroduction,jdbcType=VARCHAR}, #{cMajor,jdbcType=VARCHAR}, 
-      #{cCollege,jdbcType=VARCHAR})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="com.yujr.cms.entity.Course">
-    update course
-    set c_name = #{cName,jdbcType=VARCHAR},
-      c_introduction = #{cIntroduction,jdbcType=VARCHAR},
-      c_major = #{cMajor,jdbcType=VARCHAR},
-      c_college = #{cCollege,jdbcType=VARCHAR}
-    where c_id = #{cId,jdbcType=INTEGER}
-  </update>
+    <resultMap id="BaseResultMap" type="com.yujr.cms.entity.Course">
+        <id column="c_id" jdbcType="INTEGER" property="cId"/>
+        <result column="c_name" jdbcType="VARCHAR" property="cName"/>
+        <result column="c_introduction" jdbcType="VARCHAR" property="cIntroduction"/>
+        <result column="c_major" jdbcType="VARCHAR" property="cMajor"/>
+        <result column="c_college" jdbcType="VARCHAR" property="cCollege"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        c_id, c_name, c_introduction, c_major, c_college
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from course
+        where c_id = #{cId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from course
+        where c_id = #{cId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="c_id" keyProperty="cId" parameterType="com.yujr.cms.entity.Course"
+            useGeneratedKeys="true">
+        insert into course (c_name, c_introduction, c_major,
+                            c_college)
+        values (#{cName,jdbcType=VARCHAR}, #{cIntroduction,jdbcType=VARCHAR}, #{cMajor,jdbcType=VARCHAR},
+                #{cCollege,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.yujr.cms.entity.Course">
+        update course
+        set c_name         = #{cName,jdbcType=VARCHAR},
+            c_introduction = #{cIntroduction,jdbcType=VARCHAR},
+            c_major        = #{cMajor,jdbcType=VARCHAR},
+            c_college      = #{cCollege,jdbcType=VARCHAR}
+        where c_id = #{cId,jdbcType=INTEGER}
+    </update>
 </mapper>
