@@ -2,12 +2,17 @@ package com.yujr.cms.service;
 
 import com.yujr.cms.commons.CodecUtils;
 import com.yujr.cms.dao.*;
+import com.yujr.cms.dto.AdminRes;
 import com.yujr.cms.entity.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class AdminService {
+    @Autowired
+    private AdminDao adminDao;
     @Autowired
     private TeacherDao teacherDao;
     @Autowired
@@ -22,17 +27,33 @@ public class AdminService {
     private CourseScoreDao courseScoreDao;
 
     /**
+     * 登录
+     *
+     * @param req 请求用户
+     * @return 登录结果
+     */
+    public boolean doAdminLogin(Admin req) {
+        log.info("doAdminLogin：" + req.toString());
+        //先md5
+        String a_name = req.getAName();
+        String a_passwd = CodecUtils.md5(req.getAPasswd());
+        //再登录
+        Admin admin = adminDao.selectByPrimaryKey(a_name);
+        return a_passwd.equals(admin.getAPasswd());
+    }
+
+    /**
      * 增加一个老师，返回其工号
      *
      * @param record 老师记录
-     * @return 工号
+     * @return 具体数据信息
      */
     public int addTeacher(Teacher record) {
+        log.info("addTeacher: " + record.toString());
         //先进行md5加密
         record.setTPasswd(CodecUtils.md5(record.getTPasswd()));
         //再加入到数据库里面
         teacherDao.insert(record);
-        //返回其工号
         return record.getTId();
     }
 
