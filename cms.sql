@@ -147,6 +147,15 @@ create table `select_course`
 ) engine = innodb
   default charset = utf8;
 
+-- 学生选课后，开课记录内的选课人数+1
+create trigger on_select_course_insert
+    after insert
+    on `select_course`
+    for each row
+    update `course_schedule`
+    set `cs_num`=`cs_num` + 1
+    where `cs_id` = NEW.`cs_id`;
+
 insert into `select_course` (`s_id`, `cs_id`)
 VALUES (1, 1),
        (1, 2),
