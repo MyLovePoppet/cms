@@ -5,6 +5,8 @@ import com.yujr.cms.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/cms")
 public class CmsController {
@@ -20,6 +22,16 @@ public class CmsController {
     @RequestMapping(value = "/adminLogin", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public boolean login(@RequestBody Admin req) {
         return adminService.doAdminLogin(req);
+    }
+
+    /**
+     * 增加一个教师
+     *
+     * @return TeacherRes
+     */
+    @RequestMapping(value = "/getAllTeachers", method = RequestMethod.GET)
+    public List<Teacher> addTeacher() {
+        return adminService.getAllTeachers();
     }
 
     /**
@@ -43,7 +55,16 @@ public class CmsController {
     public boolean deleteTeacher(@RequestParam int id) {
         return adminService.deleteTeacher(id);
     }
-
+    /**
+     * 修改一个教师
+     *
+     * @param req 教师数据
+     * @return 是否成功
+     */
+    @RequestMapping(value = "/updateTeacher", method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
+    public boolean updateTeacher(@RequestBody Teacher req) {
+        return adminService.updateTeacher(req);
+    }
     /**
      * 增加一个学生
      *
