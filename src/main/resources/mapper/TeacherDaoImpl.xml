@@ -17,6 +17,10 @@
         from teacher
         where t_id = #{tId,jdbcType=INTEGER}
     </select>
+    <select id="selectAllTeachers" resultType="com.yujr.cms.entity.Teacher" resultMap="BaseResultMap">
+        select *
+        from teacher;
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from teacher
@@ -31,10 +35,12 @@
     </insert>
     <update id="updateByPrimaryKey" parameterType="com.yujr.cms.entity.Teacher">
         update teacher
-        set t_name         = #{tName,jdbcType=VARCHAR},
-            t_passwd       = #{tPasswd,jdbcType=CHAR},
-            t_sex          = #{tSex,jdbcType=CHAR},
-            t_introduction = #{tIntroduction,jdbcType=VARCHAR}
+        set t_name = #{tName,jdbcType=VARCHAR},
+        <if test="tPasswd!=null">
+            t_passwd = md5(#{tPasswd,jdbcType=CHAR}),
+        </if>
+        t_sex = #{tSex,jdbcType=CHAR},
+        t_introduction = #{tIntroduction,jdbcType=VARCHAR}
         where t_id = #{tId,jdbcType=INTEGER}
     </update>
 </mapper>
