@@ -2,11 +2,12 @@ package com.yujr.cms.service;
 
 import com.yujr.cms.commons.CodecUtils;
 import com.yujr.cms.dao.*;
-import com.yujr.cms.dto.AdminRes;
 import com.yujr.cms.entity.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -33,7 +34,7 @@ public class AdminService {
      * @return 登录结果
      */
     public boolean doAdminLogin(Admin req) {
-        log.info("doAdminLogin：" + req.toString());
+        log.info("do admin login：" + req.toString());
         //先md5
         String a_name = req.getAName();
         String a_passwd = CodecUtils.md5(req.getAPasswd());
@@ -43,13 +44,23 @@ public class AdminService {
     }
 
     /**
+     * 获取所有的teacher
+     *
+     * @return list/<Teacher>
+     */
+    public List<Teacher> getAllTeachers() {
+        log.info("get all teachers");
+        return teacherDao.selectAllTeachers();
+    }
+
+    /**
      * 增加一个老师，返回其工号
      *
      * @param record 老师记录
      * @return 具体数据信息
      */
     public int addTeacher(Teacher record) {
-        log.info("addTeacher: " + record.toString());
+        log.info("add teacher: " + record.toString());
         //先进行md5加密
         record.setTPasswd(CodecUtils.md5(record.getTPasswd()));
         //再加入到数据库里面
@@ -64,7 +75,13 @@ public class AdminService {
      * @return 是否成功
      */
     public boolean deleteTeacher(int t_id) {
+        log.info("delete teacher: " + t_id);
         return teacherDao.deleteByPrimaryKey(t_id) == 1;
+    }
+
+    public boolean updateTeacher(Teacher record) {
+        log.info("update teacher: " + record.toString());
+        return teacherDao.updateByPrimaryKey(record) == 1;
     }
 
     /**
