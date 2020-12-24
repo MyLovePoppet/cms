@@ -185,12 +185,24 @@ public class AdminService {
     }
 
     /**
+     * 获取所有开课的详细信息
+     *
+     * @return 所有开课的详细信息
+     */
+    public List<CourseScheduleFull> getAllCourseSchedulesFully() {
+        log.info("get all course schedule fully");
+        return courseScheduleDao.selectAllCourseSchedulesFully();
+    }
+
+
+    /**
      * 添加一门开课记录
      *
      * @param record 开课记录
      * @return 学号
      */
     public int addCourseSchedule(CourseSchedule record) {
+        log.info("add course schedule: " + record);
         courseScheduleDao.insert(record);
         //返回记录号
         return record.getCsId();
@@ -203,7 +215,30 @@ public class AdminService {
      * @return 是否成功
      */
     public boolean deleteCourseSchedule(int cs_id) {
+        log.info("delete course schedule: " + cs_id);
         return courseScheduleDao.deleteByPrimaryKey(cs_id) == 1;
+    }
+
+    /**
+     * 修改一门开课记录
+     *
+     * @param record 开课信息
+     * @return 是否成功
+     */
+    public boolean updateCourseSchedule(CourseSchedule record) {
+        log.info("update course schedule: " + record);
+        int c = courseScheduleDao.updateByPrimaryKey(record);
+        return c == 1;
+    }
+
+    /**
+     * 获取所有选课的详细信息
+     *
+     * @return 所有开课的详细信息
+     */
+    public List<SelectCourseFull> getAllSelectCoursesFully() {
+        log.info("get all select courses fully");
+        return selectCourseDao.selectAllSelectCoursesFully();
     }
 
     /**
@@ -225,6 +260,16 @@ public class AdminService {
      */
     public boolean deleteSelectCourse(int sc_id) {
         return selectCourseDao.deleteByPrimaryKey(sc_id) == 1;
+    }
+
+    /**
+     * 获取所有选课结果的详细信息
+     *
+     * @return 所有开课的详细信息
+     */
+    public List<CourseScoreFull> getAllCourseScoresFully() {
+        log.info("get all course scores fully");
+        return courseScoreDao.selectAllCourseScoresFully();
     }
 
     /**

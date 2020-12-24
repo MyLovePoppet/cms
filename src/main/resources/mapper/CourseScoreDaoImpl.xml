@@ -7,6 +7,19 @@
         <result column="final_exam_score" jdbcType="INTEGER" property="finalExamScore"/>
         <result column="overall_score" jdbcType="INTEGER" property="overallScore"/>
     </resultMap>
+    <resultMap id="FullResultMap" type="com.yujr.cms.entity.CourseScoreFull">
+        <id column="sc_id" jdbcType="INTEGER" property="scId"/>
+        <result column="s_id" jdbcType="INTEGER" property="sId"/>
+        <result column="s_name" jdbcType="VARCHAR" property="sName"/>
+        <result column="cs_id" jdbcType="INTEGER" property="csId"/>
+        <result column="c_id" jdbcType="INTEGER" property="cId"/>
+        <result column="c_name" jdbcType="VARCHAR" property="cName"/>
+        <result column="t_id" jdbcType="INTEGER" property="tId"/>
+        <result column="t_name" jdbcType="VARCHAR" property="tName"/>
+        <result column="normal_score" jdbcType="INTEGER" property="normalScore"/>
+        <result column="final_exam_score" jdbcType="INTEGER" property="finalExamScore"/>
+        <result column="overall_score" jdbcType="INTEGER" property="overallScore"/>
+    </resultMap>
     <sql id="Base_Column_List">
         sc_id, normal_score, final_exam_score, overall_score
     </sql>
@@ -15,6 +28,26 @@
         <include refid="Base_Column_List"/>
         from course_score
         where sc_id = #{scId,jdbcType=INTEGER}
+    </select>
+    <select id="selectAllCourseScoresFully" resultType="com.yujr.cms.entity.CourseScoreFull" resultMap="FullResultMap">
+        select `select_course`.`sc_id`,
+               `select_course`.`s_id`,
+               `s`.`s_name`,
+               `select_course`.`cs_id`,
+               c.`c_id`,
+               c2.`c_name`,
+               c.`t_id`,
+               t.`t_name`,
+               cs.normal_score,
+               cs.final_exam_score,
+               cs.overall_score
+
+        from `select_course`
+                 join course_score cs on select_course.sc_id = cs.sc_id
+                 join course_schedule c on c.cs_id = select_course.cs_id
+                 join student s on s.s_id = select_course.s_id
+                 join course c2 on c2.c_id = c.c_id
+                 join teacher t on t.t_id = c.t_id;
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
@@ -30,7 +63,7 @@
         update course_score
         set normal_score     = #{normalScore,jdbcType=INTEGER},
             final_exam_score = #{finalExamScore,jdbcType=INTEGER},
-            overall_score    = #{overallScore,jdbcType=INTEGER}
+            overall_score    = #{normalScore} * 0.3 + #{finalExamScore} * 0.7
         where sc_id = #{scId,jdbcType=INTEGER}
     </update>
 </mapper>

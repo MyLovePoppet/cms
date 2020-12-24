@@ -11,6 +11,18 @@
         <result column="cs_period" jdbcType="INTEGER" property="csPeriod"/>
         <result column="cs_num" jdbcType="INTEGER" property="csNum"/>
     </resultMap>
+    <resultMap id="FullResultMap" type="com.yujr.cms.entity.CourseScheduleFull">
+        <id column="cs_id" jdbcType="INTEGER" property="csId"/>
+        <result column="c_id" jdbcType="INTEGER" property="cId"/>
+        <result column="c_name" jdbcType="VARCHAR" property="cName"/>
+        <result column="t_id" jdbcType="INTEGER" property="tId"/>
+        <result column="t_name" jdbcType="VARCHAR" property="tName"/>
+        <result column="cs_time" jdbcType="VARCHAR" property="csTime"/>
+        <result column="cs_location" jdbcType="VARCHAR" property="csLocation"/>
+        <result column="cs_credits" jdbcType="INTEGER" property="csCredits"/>
+        <result column="cs_period" jdbcType="INTEGER" property="csPeriod"/>
+        <result column="cs_num" jdbcType="INTEGER" property="csNum"/>
+    </resultMap>
     <sql id="Base_Column_List">
         cs_id, c_id, t_id, cs_time, cs_location, cs_credits, cs_period, cs_num
     </sql>
@@ -26,6 +38,22 @@
         where c_id = #{cId,jdbcType=INTEGER}
           and t_id = #{tId,jdbcType=INTEGER};
     </select>
+    <select id="selectAllCourseSchedulesFully" resultType="com.yujr.cms.entity.CourseScheduleFull"
+            resultMap="FullResultMap">
+        select `cs_id`,
+               `course_schedule`.`c_id`,
+               `c_name`,
+               `course_schedule`.`t_id`,
+               `t_name`,
+               `cs_time`,
+               `cs_location`,
+               `cs_credits`,
+               `cs_period`,
+               `cs_num`
+        from `course_schedule`
+                 join `course` c on `course_schedule`.`c_id` = c.`c_id`
+                 join `teacher` t on `course_schedule`.`t_id` = t.`t_id`;
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from course_schedule
@@ -34,11 +62,9 @@
     <insert id="insert" keyColumn="cs_id" keyProperty="csId" parameterType="com.yujr.cms.entity.CourseSchedule"
             useGeneratedKeys="true">
         insert into course_schedule (c_id, t_id, cs_time,
-                                     cs_location, cs_credits, cs_period,
-                                     cs_num)
+                                     cs_location, cs_credits, cs_period)
         values (#{cId,jdbcType=INTEGER}, #{tId,jdbcType=INTEGER}, #{csTime,jdbcType=VARCHAR},
-                #{csLocation,jdbcType=VARCHAR}, #{csCredits,jdbcType=INTEGER}, #{csPeriod,jdbcType=INTEGER},
-                #{csNum,jdbcType=INTEGER})
+                #{csLocation,jdbcType=VARCHAR}, #{csCredits,jdbcType=INTEGER}, #{csPeriod,jdbcType=INTEGER})
     </insert>
     <update id="updateByPrimaryKey" parameterType="com.yujr.cms.entity.CourseSchedule">
         update course_schedule
@@ -47,8 +73,7 @@
             cs_time     = #{csTime,jdbcType=VARCHAR},
             cs_location = #{csLocation,jdbcType=VARCHAR},
             cs_credits  = #{csCredits,jdbcType=INTEGER},
-            cs_period   = #{csPeriod,jdbcType=INTEGER},
-            cs_num      = #{csNum,jdbcType=INTEGER}
+            cs_period   = #{csPeriod,jdbcType=INTEGER}
         where cs_id = #{csId,jdbcType=INTEGER}
     </update>
 </mapper>

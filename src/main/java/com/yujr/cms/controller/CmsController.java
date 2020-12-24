@@ -153,6 +153,17 @@ public class CmsController {
     }
 
     /**
+     * 获取所有的开课详细信息
+     *
+     * @return student res
+     */
+    @RequestMapping(value = "/getAllCourseSchedulesFully", method = RequestMethod.GET)
+    public List<CourseScheduleFull> getAllCourseSchedulesFully() {
+        return adminService.getAllCourseSchedulesFully();
+    }
+
+
+    /**
      * 添加一门开课记录
      *
      * @param req 开课记录
@@ -172,6 +183,27 @@ public class CmsController {
     @RequestMapping(value = "/deleteCourseSchedule", method = RequestMethod.POST)
     public boolean deleteCourseSchedule(@RequestParam int id) {
         return adminService.deleteCourseSchedule(id);
+    }
+
+    /**
+     * 修改一门开课记录
+     *
+     * @param req 开课记录
+     * @return 是否修改成功
+     */
+    @RequestMapping(value = "/updateCourseSchedule", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public boolean updateCourseScore(@RequestBody CourseSchedule req) {
+        return adminService.updateCourseSchedule(req);
+    }
+
+    /**
+     * 获取所有选课的详细信息
+     *
+     * @return 所有开课的详细信息
+     */
+    @RequestMapping(value = "/getAllSelectCoursesFully", method = RequestMethod.GET)
+    public List<SelectCourseFull> getAllSelectCoursesFully() {
+        return adminService.getAllSelectCoursesFully();
     }
 
     /**
@@ -207,4 +239,13 @@ public class CmsController {
         return adminService.updateCourseScore(record);
     }
 
+    /**
+     * 获取所有选课结果的详细信息
+     *
+     * @return 所有开课的详细信息
+     */
+    @RequestMapping(value = "/getAllCourseScoresFully", method = RequestMethod.GET)
+    public List<CourseScoreFull> getAllCourseScoresFully() {
+        return adminService.getAllCourseScoresFully();
+    }
 }
