@@ -79,9 +79,25 @@ public class AdminService {
         return teacherDao.deleteByPrimaryKey(t_id) == 1;
     }
 
+    /**
+     * 修改教师信息
+     *
+     * @param record 新的信息
+     * @return 是否成功
+     */
     public boolean updateTeacher(Teacher record) {
         log.info("update teacher: " + record.toString());
         return teacherDao.updateByPrimaryKey(record) == 1;
+    }
+
+    /**
+     * 获取所有的学生
+     *
+     * @return 所有的学生
+     */
+    public List<Student> getAllStudents() {
+        log.info("get all students");
+        return studentDao.selectAllStudents();
     }
 
     /**
@@ -109,6 +125,16 @@ public class AdminService {
         return studentDao.deleteByPrimaryKey(s_id) == 1;
     }
 
+    /**
+     * 修改教师信息
+     *
+     * @param record 新的信息
+     * @return 是否成功
+     */
+    public boolean updateStudent(Student record) {
+        log.info("update student: " + record.toString());
+        return studentDao.updateByPrimaryKey(record) == 1;
+    }
     /**
      * 增加一门课程
      *

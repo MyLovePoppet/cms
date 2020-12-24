@@ -25,12 +25,12 @@ public class CmsController {
     }
 
     /**
-     * 增加一个教师
+     * 获取所有的教师
      *
      * @return TeacherRes
      */
     @RequestMapping(value = "/getAllTeachers", method = RequestMethod.GET)
-    public List<Teacher> addTeacher() {
+    public List<Teacher> getAllTeachers() {
         return adminService.getAllTeachers();
     }
 
@@ -65,6 +65,17 @@ public class CmsController {
     public boolean updateTeacher(@RequestBody Teacher req) {
         return adminService.updateTeacher(req);
     }
+
+    /**
+     * 获取所有的学生
+     *
+     * @return student res
+     */
+    @RequestMapping(value = "/getAllStudents", method = RequestMethod.GET)
+    public List<Student> getAllStudents() {
+        return adminService.getAllStudents();
+    }
+
     /**
      * 增加一个学生
      *
@@ -87,6 +98,16 @@ public class CmsController {
         return adminService.deleteStudent(id);
     }
 
+    /**
+     * 修改一个学生
+     *
+     * @param req 教师数据
+     * @return 是否成功
+     */
+    @RequestMapping(value = "/updateStudent", method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
+    public boolean updateTeacher(@RequestBody Student req) {
+        return adminService.updateStudent(req);
+    }
     /**
      * 增加一门课程
      *
