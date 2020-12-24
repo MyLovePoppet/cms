@@ -108,6 +108,17 @@ public class CmsController {
     public boolean updateTeacher(@RequestBody Student req) {
         return adminService.updateStudent(req);
     }
+
+    /**
+     * 获取所有的课程
+     *
+     * @return course res
+     */
+    @RequestMapping(value = "/getAllCourses", method = RequestMethod.GET)
+    public List<Course> getAllCourses() {
+        return adminService.getAllCourses();
+    }
+
     /**
      * 增加一门课程
      *
@@ -117,6 +128,17 @@ public class CmsController {
     @RequestMapping(value = "/addCourse", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public int addCourse(@RequestBody Course req) {
         return adminService.addCourse(req);
+    }
+
+    /**
+     * 修改一个课程
+     *
+     * @param req 课程数据
+     * @return 是否成功
+     */
+    @RequestMapping(value = "/updateCourse", method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
+    public boolean updateTeacher(@RequestBody Course req) {
+        return adminService.updateCourse(req);
     }
 
     /**

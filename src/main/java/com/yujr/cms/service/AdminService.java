@@ -135,6 +135,17 @@ public class AdminService {
         log.info("update student: " + record.toString());
         return studentDao.updateByPrimaryKey(record) == 1;
     }
+
+    /**
+     * 获取所有的课程
+     *
+     * @return 所有的课程
+     */
+    public List<Course> getAllCourses() {
+        log.info("get all courses");
+        return courseDao.selectAllCourses();
+    }
+
     /**
      * 增加一门课程
      *
@@ -160,6 +171,17 @@ public class AdminService {
         } else {
             return false;
         }
+    }
+
+    /**
+     * 修改课程信息
+     *
+     * @param record 新的信息
+     * @return 是否成功
+     */
+    public boolean updateCourse(Course record) {
+        log.info("update course: " + record.toString());
+        return courseDao.updateByPrimaryKey(record) == 1;
     }
 
     /**

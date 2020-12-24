@@ -17,6 +17,10 @@
         from course
         where c_id = #{cId,jdbcType=INTEGER}
     </select>
+    <select id="selectAllCourses" resultType="com.yujr.cms.entity.Course" resultMap="BaseResultMap">
+        select *
+        from course;
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from course
