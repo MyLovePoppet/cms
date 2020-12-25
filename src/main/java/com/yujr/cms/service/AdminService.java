@@ -40,7 +40,27 @@ public class AdminService {
         String a_passwd = CodecUtils.md5(req.getAPasswd());
         //再登录
         Admin admin = adminDao.selectByPrimaryKey(a_name);
+        if (admin == null)
+            return false;
         return a_passwd.equals(admin.getAPasswd());
+    }
+
+    /**
+     * 登录
+     *
+     * @param req 请求用户
+     * @return 登录结果
+     */
+    public boolean doTeacherLogin(Teacher req) {
+        log.info("do teacher login：" + req.toString());
+        //先md5
+        int t_id = req.getTId();
+        String t_passwd = CodecUtils.md5(req.getTPasswd());
+        //再登录
+        Teacher teacher = teacherDao.selectByPrimaryKey(t_id);
+        if (teacher == null)
+            return false;
+        return t_passwd.equals(teacher.getTPasswd());
     }
 
     /**

@@ -20,8 +20,19 @@ public class CmsController {
      * @return AdminRes
      */
     @RequestMapping(value = "/adminLogin", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public boolean login(@RequestBody Admin req) {
+    public boolean adminLogin(@RequestBody Admin req) {
         return adminService.doAdminLogin(req);
+    }
+
+    /**
+     * admin登录请求
+     *
+     * @param req 请求数据
+     * @return AdminRes
+     */
+    @RequestMapping(value = "/teacherLogin", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public boolean teacherLogin(@RequestBody Teacher req) {
+        return adminService.doTeacherLogin(req);
     }
 
     /**
