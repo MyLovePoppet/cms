@@ -54,6 +54,23 @@
                  join `course` c on `course_schedule`.`c_id` = c.`c_id`
                  join `teacher` t on `course_schedule`.`t_id` = t.`t_id`;
     </select>
+    <select id="selectCourseSchedulesByTeacherId" resultType="com.yujr.cms.entity.CourseScheduleFull"
+            resultMap="FullResultMap">
+        select `cs_id`,
+               `course_schedule`.`c_id`,
+               `c_name`,
+               `course_schedule`.`t_id`,
+               `t_name`,
+               `cs_time`,
+               `cs_location`,
+               `cs_credits`,
+               `cs_period`,
+               `cs_num`
+        from `course_schedule`
+                 join `course` c on `course_schedule`.`c_id` = c.`c_id`
+                 join `teacher` t on `course_schedule`.`t_id` = t.`t_id`
+        where `course_schedule`.`t_id` = #{tId,jdbcType=INTEGER};
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from course_schedule

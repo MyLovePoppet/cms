@@ -11,7 +11,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class AdminService {
+public class CmsService {
     @Autowired
     private AdminDao adminDao;
     @Autowired
@@ -214,6 +214,16 @@ public class AdminService {
         return courseScheduleDao.selectAllCourseSchedulesFully();
     }
 
+    /**
+     * 通过教师id获取所有开课的详细信息
+     *
+     * @param tId 教师id
+     * @return 所有开课的详细信息
+     */
+    public List<CourseScheduleFull> getCourseSchedulesByTeacherId(int tId) {
+        log.info("get course schedule by teacher id:");
+        return courseScheduleDao.selectCourseSchedulesByTeacherId(tId);
+    }
 
     /**
      * 添加一门开课记录
@@ -262,6 +272,24 @@ public class AdminService {
     }
 
     /**
+     * 通过开课id获取所有选课的详细信息
+     *
+     * @return 所有开课的详细信息
+     */
+    public List<SelectCourseFull> getSelectCoursesByCourseScheduleId(int cs_id) {
+        log.info("get selected course by teacher id");
+        return selectCourseDao.selectSelectCoursesByCourseScheduleId(cs_id);
+    }
+    /**
+     * 通过学生id获取所有选课的详细信息
+     *
+     * @return 所有开课的详细信息
+     */
+    public List<SelectCourseFull> getSelectCoursesByStudentId(int s_id) {
+        log.info("get selected course by teacher id");
+        return selectCourseDao.selectSelectCoursesByStudentId(s_id);
+    }
+    /**
      * 增加一个选课信息
      *
      * @param record 选课记录
@@ -292,6 +320,25 @@ public class AdminService {
         return courseScoreDao.selectAllCourseScoresFully();
     }
 
+    /**
+     * 通过教师id获取所有选课结果的详细信息
+     *
+     * @return 所有开课的详细信息
+     */
+    public List<CourseScoreFull> getCourseScoresByCourseScheduleId(int cs_id) {
+        log.info("get course schedule by cs id: "+cs_id);
+        return courseScoreDao.selectCourseScoresByCourseScheduleId(cs_id);
+    }
+
+    /**
+     * 通过教师id获取所有选课结果的详细信息
+     *
+     * @return 所有开课的详细信息
+     */
+    public List<CourseScoreFull> getCourseScoresByStudentId(int t_id) {
+        log.info("get all course scores fully");
+        return courseScoreDao.selectCourseScoresByStudentId(t_id);
+    }
     /**
      * 修改一门课的得分结果
      *

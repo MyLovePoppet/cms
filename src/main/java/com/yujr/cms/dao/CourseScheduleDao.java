@@ -19,5 +19,7 @@ public interface CourseScheduleDao {
 
     List<CourseScheduleFull> selectAllCourseSchedulesFully();
 
+    List<CourseScheduleFull> selectCourseSchedulesByTeacherId(@Param("tId") Integer tId);
+
     int updateByPrimaryKey(CourseSchedule record);
 }

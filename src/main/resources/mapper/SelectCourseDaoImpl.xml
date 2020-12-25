@@ -25,7 +25,8 @@
         from select_course
         where sc_id = #{scId,jdbcType=INTEGER}
     </select>
-    <select id="selectAllSelectCoursesFully" resultType="com.yujr.cms.entity.SelectCourseFull" resultMap="FullResultMap">
+    <select id="selectAllSelectCoursesFully" resultType="com.yujr.cms.entity.SelectCourseFull"
+            resultMap="FullResultMap">
         select `select_course`.`sc_id`,
                `select_course`.`s_id`,
                `s`.`s_name`,
@@ -40,6 +41,42 @@
                  join student s on s.s_id = select_course.s_id
                  join course c2 on c2.c_id = c.c_id
                  join teacher t on t.t_id = c.t_id;
+    </select>
+    <select id="selectSelectCoursesByStudentId" resultType="com.yujr.cms.entity.SelectCourseFull"
+            resultMap="FullResultMap">
+        select `select_course`.`sc_id`,
+               `select_course`.`s_id`,
+               `s`.`s_name`,
+               `select_course`.`cs_id`,
+               c.`c_id`,
+               c2.`c_name`,
+               c.`t_id`,
+               t.`t_name`
+
+        from `select_course`
+                 join course_schedule c on c.cs_id = select_course.cs_id
+                 join student s on s.s_id = select_course.s_id
+                 join course c2 on c2.c_id = c.c_id
+                 join teacher t on t.t_id = c.t_id
+        where s.s_id = #{sId,jdbcType=INTEGER};
+    </select>
+    <select id="selectSelectCoursesByCourseScheduleId" resultType="com.yujr.cms.entity.SelectCourseFull"
+            resultMap="FullResultMap">
+        select `select_course`.`sc_id`,
+               `select_course`.`s_id`,
+               `s`.`s_name`,
+               `select_course`.`cs_id`,
+               c.`c_id`,
+               c2.`c_name`,
+               c.`t_id`,
+               t.`t_name`
+
+        from `select_course`
+                 join course_schedule c on c.cs_id = select_course.cs_id
+                 join student s on s.s_id = select_course.s_id
+                 join course c2 on c2.c_id = c.c_id
+                 join teacher t on t.t_id = c.t_id
+        where `select_course`.cs_id = #{csId,jdbcType=INTEGER};
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete

@@ -1,7 +1,7 @@
 package com.yujr.cms.controller;
 
 import com.yujr.cms.entity.*;
-import com.yujr.cms.service.AdminService;
+import com.yujr.cms.service.CmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping("/cms")
 public class CmsController {
     @Autowired
-    AdminService adminService;
+    CmsService cmsService;
 
     /**
      * admin登录请求
@@ -21,7 +21,7 @@ public class CmsController {
      */
     @RequestMapping(value = "/adminLogin", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public boolean adminLogin(@RequestBody Admin req) {
-        return adminService.doAdminLogin(req);
+        return cmsService.doAdminLogin(req);
     }
 
     /**
@@ -32,7 +32,7 @@ public class CmsController {
      */
     @RequestMapping(value = "/teacherLogin", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public boolean teacherLogin(@RequestBody Teacher req) {
-        return adminService.doTeacherLogin(req);
+        return cmsService.doTeacherLogin(req);
     }
 
     /**
@@ -42,7 +42,7 @@ public class CmsController {
      */
     @RequestMapping(value = "/getAllTeachers", method = RequestMethod.GET)
     public List<Teacher> getAllTeachers() {
-        return adminService.getAllTeachers();
+        return cmsService.getAllTeachers();
     }
 
     /**
@@ -53,7 +53,7 @@ public class CmsController {
      */
     @RequestMapping(value = "/addTeacher", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public int addTeacher(@RequestBody Teacher req) {
-        return adminService.addTeacher(req);
+        return cmsService.addTeacher(req);
     }
 
     /**
@@ -64,17 +64,18 @@ public class CmsController {
      */
     @RequestMapping(value = "/deleteTeacher", method = RequestMethod.POST)
     public boolean deleteTeacher(@RequestParam int id) {
-        return adminService.deleteTeacher(id);
+        return cmsService.deleteTeacher(id);
     }
+
     /**
      * 修改一个教师
      *
      * @param req 教师数据
      * @return 是否成功
      */
-    @RequestMapping(value = "/updateTeacher", method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/updateTeacher", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public boolean updateTeacher(@RequestBody Teacher req) {
-        return adminService.updateTeacher(req);
+        return cmsService.updateTeacher(req);
     }
 
     /**
@@ -84,7 +85,7 @@ public class CmsController {
      */
     @RequestMapping(value = "/getAllStudents", method = RequestMethod.GET)
     public List<Student> getAllStudents() {
-        return adminService.getAllStudents();
+        return cmsService.getAllStudents();
     }
 
     /**
@@ -95,7 +96,7 @@ public class CmsController {
      */
     @RequestMapping(value = "/addStudent", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public int addStudent(@RequestBody Student req) {
-        return adminService.addStudent(req);
+        return cmsService.addStudent(req);
     }
 
     /**
@@ -106,7 +107,7 @@ public class CmsController {
      */
     @RequestMapping(value = "/deleteStudent", method = RequestMethod.POST)
     public boolean deleteStudent(@RequestParam int id) {
-        return adminService.deleteStudent(id);
+        return cmsService.deleteStudent(id);
     }
 
     /**
@@ -115,9 +116,9 @@ public class CmsController {
      * @param req 教师数据
      * @return 是否成功
      */
-    @RequestMapping(value = "/updateStudent", method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/updateStudent", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public boolean updateTeacher(@RequestBody Student req) {
-        return adminService.updateStudent(req);
+        return cmsService.updateStudent(req);
     }
 
     /**
@@ -127,7 +128,7 @@ public class CmsController {
      */
     @RequestMapping(value = "/getAllCourses", method = RequestMethod.GET)
     public List<Course> getAllCourses() {
-        return adminService.getAllCourses();
+        return cmsService.getAllCourses();
     }
 
     /**
@@ -138,7 +139,7 @@ public class CmsController {
      */
     @RequestMapping(value = "/addCourse", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public int addCourse(@RequestBody Course req) {
-        return adminService.addCourse(req);
+        return cmsService.addCourse(req);
     }
 
     /**
@@ -147,9 +148,9 @@ public class CmsController {
      * @param req 课程数据
      * @return 是否成功
      */
-    @RequestMapping(value = "/updateCourse", method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/updateCourse", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public boolean updateTeacher(@RequestBody Course req) {
-        return adminService.updateCourse(req);
+        return cmsService.updateCourse(req);
     }
 
     /**
@@ -160,7 +161,7 @@ public class CmsController {
      */
     @RequestMapping(value = "/deleteCourse", method = RequestMethod.POST)
     public boolean deleteCourse(@RequestParam int id) {
-        return adminService.deleteCourse(id);
+        return cmsService.deleteCourse(id);
     }
 
     /**
@@ -170,9 +171,18 @@ public class CmsController {
      */
     @RequestMapping(value = "/getAllCourseSchedulesFully", method = RequestMethod.GET)
     public List<CourseScheduleFull> getAllCourseSchedulesFully() {
-        return adminService.getAllCourseSchedulesFully();
+        return cmsService.getAllCourseSchedulesFully();
     }
 
+    /**
+     * 获取所有的开课详细信息
+     *
+     * @return student res
+     */
+    @RequestMapping(value = "/getCourseSchedulesByTeacherId", method = RequestMethod.GET)
+    public List<CourseScheduleFull> getCourseSchedulesByTeacherId(@RequestParam("id") int tId) {
+        return cmsService.getCourseSchedulesByTeacherId(tId);
+    }
 
     /**
      * 添加一门开课记录
@@ -182,7 +192,7 @@ public class CmsController {
      */
     @RequestMapping(value = "/addCourseSchedule", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public int addCourseSchedule(@RequestBody CourseSchedule req) {
-        return adminService.addCourseSchedule(req);
+        return cmsService.addCourseSchedule(req);
     }
 
     /**
@@ -193,7 +203,7 @@ public class CmsController {
      */
     @RequestMapping(value = "/deleteCourseSchedule", method = RequestMethod.POST)
     public boolean deleteCourseSchedule(@RequestParam int id) {
-        return adminService.deleteCourseSchedule(id);
+        return cmsService.deleteCourseSchedule(id);
     }
 
     /**
@@ -204,7 +214,7 @@ public class CmsController {
      */
     @RequestMapping(value = "/updateCourseSchedule", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public boolean updateCourseScore(@RequestBody CourseSchedule req) {
-        return adminService.updateCourseSchedule(req);
+        return cmsService.updateCourseSchedule(req);
     }
 
     /**
@@ -214,7 +224,27 @@ public class CmsController {
      */
     @RequestMapping(value = "/getAllSelectCoursesFully", method = RequestMethod.GET)
     public List<SelectCourseFull> getAllSelectCoursesFully() {
-        return adminService.getAllSelectCoursesFully();
+        return cmsService.getAllSelectCoursesFully();
+    }
+
+    /**
+     * 通过教师id获取所有选课的详细信息
+     *
+     * @return 所有开课的详细信息
+     */
+    @RequestMapping(value = "/getSelectCoursesByCourseScheduleId", method = RequestMethod.GET)
+    public List<SelectCourseFull> getSelectCoursesByCourseScheduleId(@RequestParam("id") int t_id) {
+        return cmsService.getSelectCoursesByCourseScheduleId(t_id);
+    }
+
+    /**
+     * 通过学生id获取所有选课的详细信息
+     *
+     * @return 所有开课的详细信息
+     */
+    @RequestMapping(value = "/getSelectCoursesByStudentId", method = RequestMethod.GET)
+    public List<SelectCourseFull> getSelectCoursesByStudentId(@RequestParam("id") int t_id) {
+        return cmsService.getSelectCoursesByStudentId(t_id);
     }
 
     /**
@@ -225,7 +255,7 @@ public class CmsController {
      */
     @RequestMapping(value = "/addSelectCourse", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public int addSelectCourse(@RequestBody SelectCourse req) {
-        return adminService.addSelectCourse(req);
+        return cmsService.addSelectCourse(req);
     }
 
     /**
@@ -236,7 +266,7 @@ public class CmsController {
      */
     @RequestMapping(value = "/deleteSelectCourse", method = RequestMethod.POST)
     public boolean deleteSelectCourse(@RequestParam int id) {
-        return adminService.deleteSelectCourse(id);
+        return cmsService.deleteSelectCourse(id);
     }
 
     /**
@@ -247,7 +277,7 @@ public class CmsController {
      */
     @RequestMapping(value = "/updateCourseScore", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public boolean updateCourseScore(@RequestBody CourseScore record) {
-        return adminService.updateCourseScore(record);
+        return cmsService.updateCourseScore(record);
     }
 
     /**
@@ -257,6 +287,26 @@ public class CmsController {
      */
     @RequestMapping(value = "/getAllCourseScoresFully", method = RequestMethod.GET)
     public List<CourseScoreFull> getAllCourseScoresFully() {
-        return adminService.getAllCourseScoresFully();
+        return cmsService.getAllCourseScoresFully();
+    }
+
+    /**
+     * 通过教师id获取所有选课结果的详细信息
+     *
+     * @return 所有开课的详细信息
+     */
+    @RequestMapping(value = "/getCourseScoresByCourseScheduleId", method = RequestMethod.GET)
+    public List<CourseScoreFull> getCourseScoresByCourseScheduleId(@RequestParam("id") int id) {
+        return cmsService.getCourseScoresByCourseScheduleId(id);
+    }
+
+    /**
+     * 通过学生id获取所有选课结果的详细信息
+     *
+     * @return 所有开课的详细信息
+     */
+    @RequestMapping(value = "/getCourseScoresByStudentId", method = RequestMethod.GET)
+    public List<CourseScoreFull> getCourseScoresByStudentId(@RequestParam("id") int id) {
+        return cmsService.getCourseScoresByStudentId(id);
     }
 }
