@@ -160,6 +160,7 @@ create table `course_score`
 ) engine = innodb
   default charset = utf8;
 
+delimiter //
 -- 创建存储过程，使得学生选课后生成成绩表，并更新选课记录表
 create procedure update_on_select_course_insert(in scID int)
 begin
@@ -170,7 +171,8 @@ begin
     update `course_schedule`
     set `cs_num`=`cs_num` + 1
     where `cs_id` = scID;
-end;
+end//
+delimiter ;
 -- 创建触发器
 create trigger on_select_course_insert
     after insert
@@ -193,7 +195,3 @@ create trigger on_select_course_delete
     delete
     from `course_score`
     where `course_score`.`sc_id` = OLD.`sc_id`;
-
-delete
-from select_course
-where sc_id = 1;
