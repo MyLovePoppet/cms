@@ -25,7 +25,7 @@ public class CmsController {
     }
 
     /**
-     * admin登录请求
+     * teacher登录请求
      *
      * @param req 请求数据
      * @return AdminRes
@@ -34,7 +34,16 @@ public class CmsController {
     public boolean teacherLogin(@RequestBody Teacher req) {
         return cmsService.doTeacherLogin(req);
     }
-
+    /**
+     * student登录请求
+     *
+     * @param req 请求数据
+     * @return AdminRes
+     */
+    @RequestMapping(value = "/studentLogin", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public boolean teacherLogin(@RequestBody Student req) {
+        return cmsService.doStudentLogin(req);
+    }
     /**
      * 获取所有的教师
      *

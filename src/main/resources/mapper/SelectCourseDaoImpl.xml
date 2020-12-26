@@ -78,6 +78,12 @@
                  join teacher t on t.t_id = c.t_id
         where `select_course`.cs_id = #{csId,jdbcType=INTEGER};
     </select>
+    <select id="selectByUniqueKey" resultType="com.yujr.cms.entity.SelectCourse" resultMap="BaseResultMap">
+        select *
+        from `select_course`
+        where `select_course`.cs_id = #{csId,jdbcType=INTEGER}
+          and `select_course`.s_id = #{sId,jdbcType=INTEGER};
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from select_course

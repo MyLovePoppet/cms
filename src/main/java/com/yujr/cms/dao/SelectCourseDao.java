@@ -15,6 +15,8 @@ public interface SelectCourseDao {
 
     SelectCourse selectByPrimaryKey(Integer scId);
 
+    SelectCourse selectByUniqueKey(@Param("sId") Integer sId, @Param("csId") Integer cs_id);
+
     List<SelectCourseFull> selectAllSelectCoursesFully();
 
     List<SelectCourseFull> selectSelectCoursesByCourseScheduleId(@Param("csId") Integer csId);

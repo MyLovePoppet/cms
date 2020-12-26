@@ -64,6 +64,24 @@ public class CmsService {
     }
 
     /**
+     * 登录
+     *
+     * @param req 请求用户
+     * @return 登录结果
+     */
+    public boolean doStudentLogin(Student req) {
+        log.info("do student login：" + req.toString());
+        //先md5
+        int s_id = req.getSId();
+        String s_passwd = CodecUtils.md5(req.getSPasswd());
+        //再登录
+        Student student = studentDao.selectByPrimaryKey(s_id);
+        if (student == null)
+            return false;
+        return s_passwd.equals(student.getSPasswd());
+    }
+
+    /**
      * 获取所有的teacher
      *
      * @return list/<Teacher>
@@ -280,6 +298,7 @@ public class CmsService {
         log.info("get selected course by teacher id");
         return selectCourseDao.selectSelectCoursesByCourseScheduleId(cs_id);
     }
+
     /**
      * 通过学生id获取所有选课的详细信息
      *
@@ -289,6 +308,7 @@ public class CmsService {
         log.info("get selected course by teacher id");
         return selectCourseDao.selectSelectCoursesByStudentId(s_id);
     }
+
     /**
      * 增加一个选课信息
      *
@@ -296,6 +316,8 @@ public class CmsService {
      * @return 选课的id
      */
     public int addSelectCourse(SelectCourse record) {
+        if (selectCourseDao.selectByUniqueKey(record.getSId(), record.getCsId()) != null)
+            return -1;
         selectCourseDao.insert(record);
         return record.getScId();
     }
@@ -326,7 +348,7 @@ public class CmsService {
      * @return 所有开课的详细信息
      */
     public List<CourseScoreFull> getCourseScoresByCourseScheduleId(int cs_id) {
-        log.info("get course schedule by cs id: "+cs_id);
+        log.info("get course schedule by cs id: " + cs_id);
         return courseScoreDao.selectCourseScoresByCourseScheduleId(cs_id);
     }
 
@@ -339,6 +361,7 @@ public class CmsService {
         log.info("get all course scores fully");
         return courseScoreDao.selectCourseScoresByStudentId(t_id);
     }
+
     /**
      * 修改一门课的得分结果
      *
